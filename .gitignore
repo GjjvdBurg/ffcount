@@ -1,0 +1,9 @@
+dircnt
+.dircnt.c*
+
+*.pyc
+ffcount/__pycache__
+ffcount/*.so
+build/
+test/__pycache__/
+ffcount.egg-info/
