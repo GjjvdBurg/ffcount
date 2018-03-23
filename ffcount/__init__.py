@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 # Author: Gertjan van den Burg <gertjanvandenburg@gmail.com>
 #

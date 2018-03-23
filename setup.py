@@ -10,31 +10,23 @@ USE_CYTHON = "auto"
 
 if USE_CYTHON:
     try:
-        from Cython.Distutils import build_ext
+        from Cython.Build import cythonize
     except ImportError:
         if USE_CYTHON == "auto":
             USE_CYTHON = False
         else:
             raise
 
-cmdclass = {}
-ext_modules = []
+ext = '.pyx' if USE_CYTHON else '.c'
+extensions = [
+        Extension("ffcount.count", [
+            os.path.join("src", "count" + ext),
+            os.path.join("src", "c_count.c")
+            ])
+        ]
 
 if USE_CYTHON:
-    ext_modules += [
-            Extension("ffcount.count", [
-                os.path.join("src", "count.pyx"),
-                os.path.join("src", "c_count.c")
-                ])
-            ]
-    cmdclass.update({"build_ext": build_ext})
-else:
-    ext_modules += [
-            Extension("ffcount.count", [
-                os.path.join("src", "count.c"),
-                os.path.join("src", "c_count.c")
-                ])
-            ]
+    extensions = cythonize(extensions)
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
@@ -50,13 +42,12 @@ setup(
         long_description=read('README.rst'),
         author="G.J.J. van den Burg",
         author_email="gertjanvandenburg@gmail.com",
+        url="https://github.com/GjjvdBurg/ffcount",
         license='Apache License 2.0',
         packages=find_packages(),
-        cmdclass=cmdclass,
-        ext_modules=ext_modules,
+        ext_modules = extensions,
         classifiers=[
             'Programming Language :: Python :: 2.7',
             'Programming Language :: Python :: 3'
             ]
         )
-
