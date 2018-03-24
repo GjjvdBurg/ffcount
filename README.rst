@@ -24,7 +24,8 @@ Installation can be done easily with pip:
 Usage
 -----
 
-The package ``ffcount`` has only one function: ``ffcount``. It can be used as
+The package ``ffcount`` has only one function: ``ffcount``. This function 
+returns a tuple ``(number_of_files, number_of_dirs)`` and it can be used as 
 follows:
 
 .. code:: python
