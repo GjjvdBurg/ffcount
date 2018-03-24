@@ -40,7 +40,7 @@ cover: test ## Test unit test coverage using default nosetests
 		--cover-html --cover-html-dir=cover
 
 clean: ## Clean build dist and egg directories left after install
-	rm -rf ./dist ./build ./$(PACKAGE).egg-info
+	rm -rf ./dist ./build ./$(PACKAGE).egg-info ./$(PACKAGE)/*.so
 	rm -f MANIFEST
 
 develop: ## Install a development version of the package needed for testing

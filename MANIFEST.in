@@ -1,0 +1,3 @@
+include src/c_count.c
+include src/count.pyx
+include src/count.c
