@@ -45,6 +45,10 @@ follows:
     (81, 10)
 
 
+Note that ``ffcount`` counts links as files, even if they point to a 
+directory. In some cases, this explains the discrepancy with other ways of 
+counting.
+
 Docs
 ----
 
