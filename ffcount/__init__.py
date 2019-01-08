@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__version__ = '0.1.4'
+__version__ = '0.1.5'
 
 # Author: Gertjan van den Burg <gertjanvandenburg@gmail.com>
 #
@@ -29,8 +29,8 @@ def ffcount(path='.', recursive=True, hidden=True, quiet=True):
         Count hidden files and directories as well.
 
     quiet : bool
-        Print errors to the screen. If False, the function will fail quietly 
-        and not print any errors.
+        Don't print errors to the screen. If True, the function will fail 
+        quietly and not print any errors.
 
     Returns
     -------

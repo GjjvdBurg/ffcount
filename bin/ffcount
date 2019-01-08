@@ -1,0 +1,46 @@
+#!/usr/bin/env python
+
+import argparse
+
+from ffcount import ffcount
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Fast file and directory count")
+    parser.add_argument(
+        "path", help="Root path to start the counting", default=".", nargs="?"
+    )
+    parser.add_argument(
+        "-n",
+        "--no-recursive",
+        action="store_true",
+        help="Don't count recursively",
+    )
+    parser.add_argument(
+        "-i",
+        "--no-hidden",
+        action="store_true",
+        help="Don't include hidden files",
+    )
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="store_true",
+        help="Verbose mode (shows errors)",
+    )
+    return parser.parse_args()
+
+
+def main():
+    args = parse_args()
+    files, dirs = ffcount(
+        args.path,
+        recursive=not args.no_recursive,
+        hidden=not args.no_hidden,
+        quiet=not args.verbose,
+    )
+    print("%i %i" % (files, dirs))
+
+
+if __name__ == "__main__":
+    main()

@@ -45,6 +45,7 @@ setup(
         url="https://github.com/GjjvdBurg/ffcount",
         license='Apache License 2.0',
         packages=find_packages(),
+        scripts=["bin/ffcount"],
         ext_modules = extensions,
         classifiers=[
             'Programming Language :: Python :: 2.7',
