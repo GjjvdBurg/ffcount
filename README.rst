@@ -6,8 +6,9 @@ in a given path. Optionally you can count recursively and include hidden files
 in the total.
 
 This package is a wrapper around ``fast-file-count`` by `Christopher Schultz
-<https://github.com/ChristopherSchultz>`_.  All credit belongs to Christopher
-Schultz, I only wrote the Python wrapper and packaged it up. See the file
+<https://github.com/ChristopherSchultz>`_.  Credit for the initial version 
+belongs to Christopher Schultz, I wrote the Python wrapper, converted the 
+Windows code to use builtin functionality, and packaged it up.  See the file
 ``src/c_count.c`` for the other contributors and see the commit history of
 this package on GitHub for my exact changes.
 
@@ -24,9 +25,12 @@ Installation can be done easily with pip:
 Usage
 -----
 
-The package ``ffcount`` has only one function: ``ffcount``. This function 
-returns a tuple ``(number_of_files, number_of_dirs)`` and it can be used as 
-follows:
+There is a command line application called ``ffcount`` and the package can be 
+used from Python.
+
+The Python package ``ffcount`` has only one function: ``ffcount``. This 
+function returns a tuple ``(number_of_files, number_of_dirs)`` and it can be 
+used as follows:
 
 .. code:: python
 
@@ -77,8 +81,8 @@ The full documentation of the ``ffcount`` function is:
             Count hidden files and directories as well.
 
         quiet : bool
-            Print errors to the screen. If False, the function will fail quietly
-            and not print any errors.
+            Don't print errors to the screen. If True, the function will fail 
+            quietly and not print any errors.
 
         Returns
         -------
