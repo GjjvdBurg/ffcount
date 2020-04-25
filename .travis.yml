@@ -21,6 +21,10 @@ jobs:
         - PYTHON="python"
         - PIP="pip"
 
+env:
+  global:
+    - CIBW_SKIP="cp27-*"
+
 install:
   - $PIP install -e .
   - $PIP install cibuildwheel==1.0.0

@@ -14,7 +14,7 @@ EMAIL = "gertjanvandenburg@gmail.com"
 LICENSE = "Apache License 2.0"
 LICENSE_TROVE = "License :: OSI Approved :: Apache Software License"
 NAME = "ffcount"
-REQUIRES_PYTHON = ">=2.7"
+REQUIRES_PYTHON = ">=3.5"
 URL = "https://github.com/GjjvdBurg/ffcount"
 VERSION = None
 USE_CYTHON = "auto"
