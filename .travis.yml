@@ -35,6 +35,9 @@ install:
   - $PIP install -e .
   - $PYTHON -m unittest discover -v -f -s ./tests
   - $PIP install cibuildwheel==1.0.0
+  - if [ "${TRAVIS_OS_NAME:-}" == "linux" ]; then
+      find . -type f -iname '*.so' -print -delete;
+    fi
 
 script:
   - if [[ "${TRAVIS_TAG:-}" =~ ^v[0-9]\.[0-9]\.[0-9].*$ ]]; then
