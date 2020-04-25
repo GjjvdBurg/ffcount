@@ -1,0 +1,28 @@
+# Travis config for ffcount
+#
+jobs:
+  include:
+    - language: python
+      dist: xenial
+      python: "3.7"
+      env:
+        - PYTHON="python3"
+        - PIP="pip3"
+    - os: osx
+      env:
+        - PYTHON="python3"
+        - PIP="pip3"
+    - os: windows
+      language: shell
+      before_install:
+        - choco install python3 --version 3.6.8 --no-progress -y
+      env:
+        - PATH=/c/Python36:/c/Python36/Scripts:$PATH
+        - PYTHON="python"
+        - PIP="pip"
+
+install:
+  - $PIP install -e .
+
+script:
+  - $PYTHON -m unittest discover -v -f -s ./test
