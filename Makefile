@@ -4,6 +4,10 @@
 # Uses self-documenting macros from here:
 # http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 
+SHELL := bash
+.SHELLFLAGS := -eu -o pipefail -c
+MAKEFLAGS += --warn-undefined-variables --no-builtin-rules
+
 PACKAGE=ffcount
 DOC_DIR='./docs/'
 
@@ -34,7 +38,6 @@ clean: ## Clean build dist and egg directories left after install
 	rm -rf ./dist
 	rm -rf ./build
 	rm -rf ./$(PACKAGE).egg-info
-	rm -rf $(VENV_DIR)
 	rm -f MANIFEST
 	find . -type f -iname '*.pyc' -delete
 	find . -type d -name '__pycache__' -empty -delete
