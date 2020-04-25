@@ -4,7 +4,10 @@ jobs:
   include:
     - language: python
       dist: xenial
+      sudo: required
       python: "3.7"
+      services:
+        - docker
       env:
         - PYTHON="python3"
         - PIP="pip3"
@@ -21,8 +24,28 @@ jobs:
         - PYTHON="python"
         - PIP="pip"
 
+env:
+  global:
+    - TWINE_USERNAME=__token__
+    - secure: "QCWysF5B5kU7euGucOVPGNFnS058JlvSrKfLRqZvdCuBxdCgnmA2SFhjnamn1Q1+5mitu26O15UdoOWL2fix+iGRCKV6Xqfigng0nIELgxMS9tW7MmBCiLrzcYHpDa+9sCwvFyFfGXix/eMmO0eRZm4AE3qnvF+sYAYM/LJHKkAAhy/qOxkUbPCBtVCdxeZf76PW/FpNTeInqKsm4pBpFqFURshRRU2waLlljJ5aOLnPd6i7ndXJUD4nW24nLcJUBU2ey7MZcG5PDqqZHEfe/9tJnGIzfpKCihP76JOqm9KtI7xmvBHKpBnx0jUYf7UKCucjbQOkMcUVaimy/HqM6dqjJ5+ydLzdg2/DMoPx6xPoduNQPrbLi5f/uMAm3TgUx27OvR3G/kaYJJTqKrsWz6WRy73mChaueITNeEKnOdDRGM8PvcYBG319238dex5MhKURHKLk9Qkk8qzxe5XVHn3IaqpGD/+kGtt5m3KUDIBh69ibbZiBWCvTwx2zDbFZqCQhmw19m6KmS8SimcWYIexbUyiuzZB9/EzCsZV1mHwiQHpmteIGFgEjVqiAPM1tJ2E02xayqTGINzocql/XeQnYTBLltxevNvRr805w8QbisL5RicfXmVeLduvQ/lUY9oVWl/sIOywu4W67Ub4CaRVrmLvDq3/UMSSLyX+M48U="
+    - CIBW_SKIP="cp27-*"
+    - CIBW_TEST_COMMAND="python -VV && python -m unittest discover -f -s {project}/tests"
+
 install:
   - $PIP install -e .
+  - $PYTHON -m unittest discover -v -f -s ./tests
+  - $PIP install cibuildwheel==1.0.0
 
 script:
-  - $PYTHON -m unittest discover -v -f -s ./test
+  - if [[ "${TRAVIS_TAG:-}" =~ ^v[0-9]\.[0-9]\.[0-9].*$ ]]; then
+      $PIP install cibuildwheel==1.0.0 && cibuildwheel --output-dir wheelhouse && ls -1 wheelhouse;
+    else
+      echo "No valid git tag present so not running cibuildwheel.";
+    fi
+
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: bash .travis_deploy.sh "${TRAVIS_TAG}" "${PIP}" "${PYTHON}"
+  on:
+    tags: true
