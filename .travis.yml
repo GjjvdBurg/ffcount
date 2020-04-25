@@ -9,7 +9,6 @@ jobs:
         - PYTHON="python3"
         - PIP="pip3"
     - os: osx
-      language: python
       env:
         - PYTHON="python3"
         - PIP="pip3"
