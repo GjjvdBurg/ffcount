@@ -219,7 +219,6 @@ def main():
         GitToMaster(),
         GitAdd(),
         MakeClean(),
-        MakeDocs(),
         RunTests(),
         PushToGitHub(),  # trigger Travis to run tests on all platforms
         WaitForTravis(),
