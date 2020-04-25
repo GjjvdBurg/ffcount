@@ -75,7 +75,7 @@ setup(
     author_email=EMAIL,
     url=URL,
     license=LICENSE,
-    packages=find_packages(exclude=["test"]),
+    packages=find_packages(exclude=["tests"]),
     install_requires=REQUIRED,
     extras_require=EXTRAS,
     entry_points={"console_scripts": ["ffcount = ffcount.__main__:main"]},
