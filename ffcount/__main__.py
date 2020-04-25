@@ -8,6 +8,7 @@ License: See LICENSE file.
 """
 
 import argparse
+import sys
 
 from . import ffcount
 from .__version__ import __version__
@@ -45,7 +46,7 @@ def parse_args():
     return parser.parse_args()
 
 
-def main():
+def real_main():
     args = parse_args()
     files, dirs = ffcount(
         args.path,
@@ -54,6 +55,9 @@ def main():
         quiet=not args.verbose,
     )
     print("%i %i" % (files, dirs))
+
+def main():
+    sys.exit(real_main())
 
 
 if __name__ == "__main__":
