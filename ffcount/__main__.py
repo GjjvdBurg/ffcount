@@ -1,12 +1,22 @@
 #!/usr/bin/env python
 
+"""Command line application for ffcount
+
+Author: G.J.J. van den Burg
+License: See LICENSE file.
+
+"""
+
 import argparse
 
-from ffcount import ffcount
+from . import ffcount
+from .__version__ import __version__
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Fast file and directory count")
+    parser = argparse.ArgumentParser(
+        description="Fast file and directory count"
+    )
     parser.add_argument(
         "path", help="Root path to start the counting", default=".", nargs="?"
     )
@@ -28,6 +38,10 @@ def parse_args():
         action="store_true",
         help="Verbose mode (shows errors)",
     )
+    parser.add_argument(
+            '-V', '--version',
+            help='Show version and exit', action='version',
+            version=__version__)
     return parser.parse_args()
 
 
