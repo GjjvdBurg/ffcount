@@ -14,6 +14,7 @@ Date: 2019-07-23
 
 import colorama
 import os
+import sys
 import webbrowser
 
 URLS = {
@@ -55,6 +56,13 @@ def get_package_name():
             (l.strip() for l in fp if l.startswith("NAME = ")), None
         )
         return nameline.split("=")[-1].strip().strip('"')
+
+
+def get_package_version(pkgname):
+    ctx = {}
+    with open(f"{pkgname.lower()}/__version__.py", "r") as fp:
+        exec(fp.read(), ctx)
+    return ctx["__version__"]
 
 
 class Step:
@@ -213,40 +221,48 @@ class WaitForTravis(Step):
         )
 
 
-def main():
+def main(target=None):
     colorama.init()
     procedure = [
-        GitToMaster(),
-        GitAdd(),
-        MakeClean(),
-        RunTests(),
-        PushToGitHub(),  # trigger Travis to run tests on all platforms
-        WaitForTravis(),
-        BumpVersionPackage(),
-        GitAdd(),
-        GitTagPreRelease(),
-        PushToGitHub(),  # trigger Travis to run tests using cibuildwheel
-        WaitForTravis(),
-        UpdateChangelog(),
-        MakeClean(),
-        MakeDocs(),
-        MakeDist(),
-        PushToTestPyPI(),
-        InstallFromTestPyPI(),
-        TestPackage(),
-        DeactivateVenv(),
-        GitAddRelease(),
-        PushToPyPI(),
-        GitTagVersion(),
-        PushToGitHub(),  # triggers Travis to build with cibw and push to PyPI
-        WaitForTravis(),
+        ("gittomaster", GitToMaster()),
+        ("gitadd1", GitAdd()),
+        ("clean1", MakeClean()),
+        ("test1", RunTests()),
+        # trigger Travis to run tests on all platforms
+        ("push1", PushToGitHub(),),
+        ("travis1", WaitForTravis()),
+        ("bumpversion", BumpVersionPackage()),
+        ("gitadd2", GitAdd()),
+        ("pre", GitTagPreRelease()),
+        # trigger Travis to run tests using cibuildwheel
+        ("push2", PushToGitHub(),),
+        ("travis2", WaitForTravis()),
+        ("changelog", UpdateChangelog()),
+        ("clean2", MakeClean()),
+        ("dist", MakeDist()),
+        ("testpypi", PushToTestPyPI()),
+        ("install", InstallFromTestPyPI()),
+        ("test2", TestPackage()),
+        ("deactivate", DeactivateVenv()),
+        ("gitadd3", GitAddRelease()),
+        ("pypi", PushToPyPI()),
+        ("tag", GitTagVersion()),
+        # triggers Travis to build and push to PyPI
+        ("push3", PushToGitHub()),
+        ("travis3", WaitForTravis()),
     ]
     context = {}
     context["pkgname"] = get_package_name()
-    for step in procedure:
+    context["version"] = get_package_version(context["pkgname"])
+    skip = True if target else False
+    for name, step in procedure:
+        if not name == target and skip:
+            continue
+        skip = False
         step.run(context)
     cprint("\nDone!", color="yellow", style="bright")
 
 
 if __name__ == "__main__":
-    main()
+    target = sys.argv[1] if len(sys.argv) > 1 else None
+    main(target=target)
