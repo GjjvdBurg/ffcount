@@ -23,4 +23,4 @@ jobs:
 
 install:
   - $PIP install -e .
-  - $PYTHON -m unittest discover -v -f -s ./tests
+  - $PYTHON -m unittest discover -v -f -s ./test
