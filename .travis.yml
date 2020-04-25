@@ -23,4 +23,6 @@ jobs:
 
 install:
   - $PIP install -e .
+
+script:
   - $PYTHON -m unittest discover -v -f -s ./test
