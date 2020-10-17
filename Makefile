@@ -31,8 +31,9 @@ install: ## Install for the current user using the default python command
 	python setup.py build_ext --inplace
 	python setup.py install --user
 
-test: develop ## Run nosetests using the default nosetests command
+test: develop ## Run unit tests
 	python -m unittest discover -v -f -s ./tests
+	mypy ffcount tests
 
 clean: ## Clean build dist and egg directories left after install
 	rm -rf ./dist
