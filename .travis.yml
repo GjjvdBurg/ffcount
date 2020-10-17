@@ -28,7 +28,7 @@ env:
   global:
     - TWINE_USERNAME=__token__
     - secure: "QCWysF5B5kU7euGucOVPGNFnS058JlvSrKfLRqZvdCuBxdCgnmA2SFhjnamn1Q1+5mitu26O15UdoOWL2fix+iGRCKV6Xqfigng0nIELgxMS9tW7MmBCiLrzcYHpDa+9sCwvFyFfGXix/eMmO0eRZm4AE3qnvF+sYAYM/LJHKkAAhy/qOxkUbPCBtVCdxeZf76PW/FpNTeInqKsm4pBpFqFURshRRU2waLlljJ5aOLnPd6i7ndXJUD4nW24nLcJUBU2ey7MZcG5PDqqZHEfe/9tJnGIzfpKCihP76JOqm9KtI7xmvBHKpBnx0jUYf7UKCucjbQOkMcUVaimy/HqM6dqjJ5+ydLzdg2/DMoPx6xPoduNQPrbLi5f/uMAm3TgUx27OvR3G/kaYJJTqKrsWz6WRy73mChaueITNeEKnOdDRGM8PvcYBG319238dex5MhKURHKLk9Qkk8qzxe5XVHn3IaqpGD/+kGtt5m3KUDIBh69ibbZiBWCvTwx2zDbFZqCQhmw19m6KmS8SimcWYIexbUyiuzZB9/EzCsZV1mHwiQHpmteIGFgEjVqiAPM1tJ2E02xayqTGINzocql/XeQnYTBLltxevNvRr805w8QbisL5RicfXmVeLduvQ/lUY9oVWl/sIOywu4W67Ub4CaRVrmLvDq3/UMSSLyX+M48U="
-    - CIBW_SKIP="cp27-*"
+    - CIBW_SKIP="pp* cp27-*"
     - CIBW_TEST_COMMAND="python -VV && python -m unittest discover -f -s {project}/tests"
 
 install:
