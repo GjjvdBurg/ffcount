@@ -15,7 +15,7 @@ EMAIL = "gertjanvandenburg@gmail.com"
 LICENSE = "Apache License 2.0"
 LICENSE_TROVE = "License :: OSI Approved :: Apache Software License"
 NAME = "ffcount"
-REQUIRES_PYTHON = ">=3.5"
+REQUIRES_PYTHON = ">=3.6"
 URL = "https://github.com/GjjvdBurg/ffcount"
 VERSION = None
 USE_CYTHON = "auto"
@@ -83,7 +83,6 @@ setup(
     ext_modules=cythonize(USE_CYTHON),
     classifiers=[
         LICENSE_TROVE,
-        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
         "Topic :: Utilities",
     ],
