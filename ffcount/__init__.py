@@ -6,13 +6,16 @@ __version__ = "0.1.5"
 #
 # License: Apache License 2.0
 
-from typing import Tuple, Union
+from pathlib import Path
+
+from typing import Tuple
+from typing import Union
 
 from .count import fast_file_count
 
 
 def ffcount(
-    path: Union[str, bytes] = ".",
+    path: Union[str, bytes, Path] = ".",
     recursive: bool = True,
     hidden: bool = True,
     quiet: bool = True,
@@ -49,6 +52,9 @@ def ffcount(
         Number of directories counted.
 
     """
+    if isinstance(path, Path):
+        path = str(path)
+
     if not isinstance(path, bytes):
         path = path.encode()
 
