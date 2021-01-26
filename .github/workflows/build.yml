@@ -23,6 +23,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Install Cython
+        run: pip install Cython
+
       - name: Install ffcount
         run: pip install -e .
 

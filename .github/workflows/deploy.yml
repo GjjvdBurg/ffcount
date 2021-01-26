@@ -29,6 +29,7 @@ jobs:
         run: |
           python -m cibuildwheel --output-dir ./wheelhouse
         env:
+          CIBW_BEFORE_BUILD: "pip install Cython"
           CIBW_TEST_COMMAND: "python -VV && python -m unittest discover -f -s {project}/tests"
           CIBW_SKIP: "pp* cp27-* cp33-* cp34-* cp35-*"
 
