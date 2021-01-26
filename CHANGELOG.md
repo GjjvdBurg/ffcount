@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 0.1.9
+
+* Fix broken source distribution
+
 ## Version 0.1.8
 
 * Add support for pathlib.Path inputs
