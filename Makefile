@@ -39,7 +39,6 @@ clean: ## Clean build dist and egg directories left after install
 	rm -rf ./dist
 	rm -rf ./build
 	rm -rf ./$(PACKAGE).egg-info
-	rm -f ./src/count.c
 	rm -f MANIFEST
 	find . -type f -iname '*.pyc' -delete
 	find . -type d -name '__pycache__' -empty -delete
