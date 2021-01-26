@@ -1,5 +1,7 @@
 # Fast File Count in Python
 
+[![build](https://github.com/GjjvdBurg/ffcount/workflows/build/badge.svg)](https://github.com/GjjvdBurg/ffcount/actions?query=workflow%3Abuild)
+
 This is a Python package to quickly count the number of files and directories
 in a given path. Optionally you can count recursively and include hidden files
 in the total.
@@ -54,48 +56,14 @@ Note that ``ffcount`` counts links as files, even if they point to a
 directory. In some cases, this explains the discrepancy with other ways of 
 counting.
 
-## Docs
-
-The full documentation of the ``ffcount`` function is:
+To obtain the full function documentation, simply run:
 
 ```python
-def ffcount(path='.', recursive=True, hidden=True, quiet=True):
-    """Fast file count
-
-    Count the files and directories in the given path. By default the function
-    is recursive and does not print errors. This function uses the C
-    implementation by Christopher Schultz.
-
-    Parameters
-    ----------
-    path : str or bytes
-        The path where to start counting. By default the current working
-        directory will be used.
-
-    recursive : bool
-        To recurse or not to recurse. If recurse is False, only the files and
-        directories in the directory given by ``path`` will be counted.
-
-    hidden : bool
-        Count hidden files and directories as well.
-
-    quiet : bool
-        Don't print errors to the screen. If True, the function will fail 
-        quietly and not print any errors.
-
-    Returns
-    -------
-    files_count : int
-        Number of files counted.
-
-    dir_count : int
-        Number of directories counted.
-
-    """
+>>> import ffcount
+>>> help(ffcount)
 ```
 
-License
--------
+## License
 
 The original C code by Christopher Schultz was licensed under the Apache
 License 2.0. This package is therefore licensed under this license as well.
