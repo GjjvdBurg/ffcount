@@ -40,9 +40,12 @@ def parse_args():
         help="Verbose mode (shows errors)",
     )
     parser.add_argument(
-            '-V', '--version',
-            help='Show version and exit', action='version',
-            version=__version__)
+        "-V",
+        "--version",
+        help="Show version and exit",
+        action="version",
+        version=__version__,
+    )
     return parser.parse_args()
 
 

@@ -58,6 +58,4 @@ def ffcount(
     if not isinstance(path, bytes):
         path = path.encode()
 
-    n_files, n_dirs = fast_file_count(path, recursive, hidden, quiet)
-
-    return n_files, n_dirs
+    return fast_file_count(path, recursive, hidden, quiet)
