@@ -1,6 +1,8 @@
 # Fast File Count in Python
 
 [![build](https://github.com/GjjvdBurg/ffcount/workflows/build/badge.svg)](https://github.com/GjjvdBurg/ffcount/actions?query=workflow%3Abuild)
+[![PyPI version](https://badge.fury.io/py/ffcount.svg)](https://pypi.org/project/ffcount)
+[![Python package downloads](https://pepy.tech/badge/ffcount)](https://pepy.tech/project/ffcount)
 
 This is a Python package to quickly count the number of files and directories
 in a given path. Optionally you can count recursively and include hidden files
