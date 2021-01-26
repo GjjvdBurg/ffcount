@@ -77,6 +77,7 @@ setup(
     url=URL,
     license=LICENSE,
     packages=find_packages(exclude=["tests"]),
+    package_data={"ffcount": ["py.typed"]},
     install_requires=REQUIRED,
     extras_require=EXTRAS,
     entry_points={"console_scripts": ["ffcount = ffcount.__main__:main"]},
@@ -86,4 +87,5 @@ setup(
         "Programming Language :: Python :: 3",
         "Topic :: Utilities",
     ],
+    zip_safe=False,
 )
