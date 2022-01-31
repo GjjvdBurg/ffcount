@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 0.2.1
+
+* _Actually_ enable Python 3.10 builds.
+
 ## Version 0.2.0
 
 * Bump version for Python 3.10 build.
