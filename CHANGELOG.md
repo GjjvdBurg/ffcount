@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 0.2.0
+
+* Bump version for Python 3.10 build.
+
 ## Version 0.1.9
 
 * Fix broken source distribution
