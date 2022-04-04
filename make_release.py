@@ -145,8 +145,9 @@ class InstallFromTestPyPI(Step):
         tmpvenv = tempfile.mkdtemp(prefix="ffcount_venv_")
         self.do_cmd(
             f"python -m venv {tmpvenv} && source {tmpvenv}/bin/activate && "
-            "pip install --no-cache-dir --index-url "
-            "https://test.pypi.org/simple/ "
+            "pip install --no-cache-dir "
+            f"--only-binary {context['pkgname']} "
+            "--index-url https://test.pypi.org/simple/ "
             "--extra-index-url https://pypi.org/simple "
             f"{context['pkgname']}=={context['version']}"
         )
