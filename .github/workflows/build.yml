@@ -8,7 +8,7 @@ on:
 
 jobs:
   python-test:
-    name: Unit tests for Python package
+    name: Unit tests
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
