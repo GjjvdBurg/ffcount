@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 0.2.2.
+
+* Regenerate Cython-compiled code
+* Change lengths to unsigned long ints.
+
 ## Version 0.2.1
 
 * _Actually_ enable Python 3.10 builds.
