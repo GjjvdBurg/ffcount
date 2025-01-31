@@ -20,13 +20,15 @@ jobs:
           submodules: true
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.12.3
+        uses: pypa/cibuildwheel@v2.22.0
         env:
           CIBW_BEFORE_BUILD: "python -m pip install Cython"
           CIBW_TEST_COMMAND: "python -VV && python -m unittest discover -f -s {project}/tests"
           CIBW_SKIP: "pp* cp27-* cp33-* cp34-* cp35-*"
+          CIBW_ARCHS_MACOS: x86_64 arm64 universal2
+          CIBW_ARCHS_LINUX: auto aarch64
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           path: ./wheelhouse/*.whl
 
@@ -39,15 +41,15 @@ jobs:
         with:
           submodules: true
 
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v5
         name: Install Python
         with:
-          python-version: '3.7'
+          python-version: '3.10'
 
       - name: Build sdist
         run: python setup.py sdist
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           path: dist/*.tar.gz
 
@@ -56,17 +58,25 @@ jobs:
     runs-on: ubuntu-latest
     # upload to PyPI on every tag starting with 'v'
     if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v') && contains(github.event.ref, '-rc.')
+
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/clevercsv
+
+    permissions:
+      id-token: write  # IMPORTANT: mandatory for trusted publishing
+
     steps:
-      - uses: actions/download-artifact@v2
+      - name: Download all the dists
+        uses: actions/download-artifact@v3
         with:
           name: artifact
-          path: dist
+          path: dist/
 
-      - uses: pypa/gh-action-pypi-publish@master
+      - name: Publish distribution to TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          user: __token__
-          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
-          repository_url: https://test.pypi.org/legacy/
+          repository-url: https://test.pypi.org/legacy/
           verbose: true
 
   upload_pypi:
@@ -74,15 +84,35 @@ jobs:
     runs-on: ubuntu-latest
     # upload to PyPI on tags starting with 'v' that don't contain '-rc.'
     if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v') && !contains(github.event.ref, '-rc.')
+
+    environment:
+      name: pypi
+      url: https://pypi.org/p/clevercsv
+
+    permissions:
+      id-token: write  # IMPORTANT: mandatory for trusted publishing
+
     steps:
-      - uses: actions/download-artifact@v2
+      - name: Download all the dists
+        uses: actions/download-artifact@v3
         with:
           name: artifact
-          path: dist
+          path: dist/
 
-      - uses: pypa/gh-action-pypi-publish@master
+      - name: Publish distribution to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          user: __token__
-          password: ${{ secrets.PYPI_API_TOKEN }}
           verbose: true
+
+  github-release:
+    name: >-
+      Sign the Python 🐍 distribution 📦 with Sigstore
+      and upload the files to GitHub Release
+    needs:
+    - upload_pypi
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write  # IMPORTANT: mandatory for making GitHub Releases
+      id-token: write  # IMPORTANT: mandatory for sigstore
 
