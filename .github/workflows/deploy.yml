@@ -24,13 +24,14 @@ jobs:
         env:
           CIBW_BEFORE_BUILD: "python -m pip install Cython"
           CIBW_TEST_COMMAND: "python -VV && python -m unittest discover -f -s {project}/tests"
-          CIBW_SKIP: "pp* cp27-* cp33-* cp34-* cp35-*"
+          CIBW_SKIP: "pp* cp27-* cp33-* cp34-* cp35-* cp36-* cp37-*"
           CIBW_ARCHS_MACOS: x86_64 arm64 universal2
           CIBW_ARCHS_LINUX: auto aarch64
 
       - uses: actions/upload-artifact@v4
         with:
           path: ./wheelhouse/*.whl
+          name: dist-${{ matrix.os }}-${{ matrix.python-version }}
 
   build_sdist:
     name: Build source distribution
@@ -52,6 +53,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           path: dist/*.tar.gz
+          name: dist-source
 
   upload_testpypi:
     needs: [build_wheels, build_sdist]
@@ -70,7 +72,8 @@ jobs:
       - name: Download all the dists
         uses: actions/download-artifact@v4
         with:
-          name: artifact
+          pattern: dist-*
+          merge-multiple: true
           path: dist/
 
       - name: Publish distribution to TestPyPI
@@ -96,7 +99,8 @@ jobs:
       - name: Download all the dists
         uses: actions/download-artifact@v4
         with:
-          name: artifact
+          pattern: dist-*
+          merge-multiple: true
           path: dist/
 
       - name: Publish distribution to PyPI
@@ -120,7 +124,8 @@ jobs:
     - name: Download all the dists
       uses: actions/download-artifact@v4
       with:
-        name: artifact
+        pattern: dist-*
+        merge-multiple: true
         path: dist/
 
     - name: Sign the dists with Sigstore
