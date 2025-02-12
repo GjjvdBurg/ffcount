@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 0.2.3
+
+* Build wheels for Python 3.13
+
 ## Version 0.2.2.
 
 * Regenerate Cython-compiled code
