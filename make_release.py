@@ -33,6 +33,7 @@ URLS = {
 
 BRANCH_NAME = "master"
 CHANGELOG_FILENAME = "CHANGELOG.md"
+PACKAGE_NAME = "ffcount"
 PACKAGE_NICE_NAME = "ffcount"
 
 
@@ -259,7 +260,7 @@ class MakeClean(Step):
 
 class InstallFromTestPyPI(Step):
     def action(self, context):
-        tmpvenv = tempfile.mkdtemp(prefix="ccsv_venv_")
+        tmpvenv = tempfile.mkdtemp(prefix=f"{PACKAGE_NAME}_venv_")
         parent = str(Path(tmpvenv).parent)
         self.execute(
             f"cd {parent} && python -m venv {tmpvenv} && source {tmpvenv}"
@@ -277,7 +278,7 @@ class TestPackage(Step):
             f"Ensuring that the package has version {context['next_version']}"
         )
         version = self.execute(
-            f"source {context['tmpvenv']}/bin/activate && clevercsv -V",
+            f"source {context['tmpvenv']}/bin/activate && ffcount -V",
             silent=True,
             confirm=False,
         )
@@ -343,9 +344,8 @@ class GitAddVersionAndMan(Step):
         self.execute(
             f"git add {context['pkgname']}/__version__.py", confirm=False
         )
-        self.execute(f"git add {MAN_DIRECTORY}", confirm=False)
         # TODO: Fail gracefully if `git diff --cached --exit-code` is 0
-        self.execute("git commit -m 'bump: update version and manpages'")
+        self.execute("git commit -m 'bump: update version'")
 
 
 class GitAddRelease(Step):
@@ -392,7 +392,7 @@ def main(target=None):
         ("push1", PushToGitHub()),
         ("ci1", WaitForCI()),
         ("bumpversion", BumpVersionPackage()),
-        ("gitadd2", GitAdd()),
+        ("gitadd2", GitAddVersionAndMan()),
         ("gittagpre", GitTagPreRelease()),
         # trigger CI to run tests using cibuildwheel
         ("push2", PushToGitHub()),

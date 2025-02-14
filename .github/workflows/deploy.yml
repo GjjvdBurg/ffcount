@@ -132,6 +132,9 @@ jobs:
       id-token: write  # IMPORTANT: mandatory for sigstore
 
     steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
     - name: Download all the dists
       uses: actions/download-artifact@v4
       with:
